@@ -1,0 +1,8 @@
+.idea
+run.bat
+install.bat
+__pychache__/
+*.py[cod]
+install_chocolatey.bat
+install_python_and_requirements.bat
+discription.txt
