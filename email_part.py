@@ -1,6 +1,7 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import datetime
 
 
 class Email:
@@ -11,10 +12,12 @@ class Email:
 
     def send_mail(self, sender_email, sender_email_password, recipient_email, body_value):
         message = MIMEMultipart()
+        now = datetime.datetime.now()
+        formatted_date = now.strftime("%d-%m-%Y %H:%M:%S")
         message['Subject'] = 'Email From Bot About Changes'
         message['From'] = sender_email
         message['To'] = recipient_email
-        body = f'There are change in {body_value}.'
+        body = f'There are change in {body_value} time is {formatted_date}!...'
         message.attach(MIMEText(body, 'plain'))
 
         with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
