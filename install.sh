@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# Check if Git is installed
+if command -v git >/dev/null 2>&1 ; then
+  echo "Git is already installed"
+else
+  # Install Git
+  sudo apt-get update
+  sudo apt-get install git
+fi
+
+# Set variables
+username="botbot2024"
+password="97xl997&"
+
+# Clone repository using HTTPS protocol
+git clone https://$username:$password@github.com/username/https://github.com/DavitNoreyan/adj_bot.git
+cd adj_bot
+
 if ! command -v python3.10 &> /dev/null
 then
     echo "Python 3.10 is not installed. Please install Python 3.10."
@@ -28,5 +45,9 @@ then
 fi
 
 pip install -r requirements.txt
+
+sudo chmod +x run.sh
+
+sudo chmod +x update.sh
 
 echo "Packages installed successfully."
