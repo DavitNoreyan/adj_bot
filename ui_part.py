@@ -183,14 +183,15 @@ class MyApp:
         while True:
             rec = Requests()
             period = 15
-            user_id = choice(self.rows)[2].cget('text')
-            start_json = rec.get_prize_chance_count(user_id=user_id)
-            self.log_window.insert(tk.END, 'Waiting 30 seconds!...\n')
-            result = rec.tracking_request(period=period, user_id=user_id, start_json=start_json)
-            mail = Email()
+            if len(self.rows) > 0:
+                user_id = choice(self.rows)[2].cget('text')
+                start_json = rec.get_prize_chance_count(user_id=user_id)
+                self.log_window.insert(tk.END, 'Waiting 30 seconds!...\n')
+                result = rec.tracking_request(period=period, user_id=user_id, start_json=start_json)
+                mail = Email()
 
-            mail.send_mail(self.sender_email_field.get(), self.sender_email_password_field.get(),
-                           self.recever_email_field.get(), result)
+                mail.send_mail(self.sender_email_field.get(), self.sender_email_password_field.get(),
+                               self.recever_email_field.get(), result)
 
     def periodical_requests_start_functionality(self):
 
