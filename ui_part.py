@@ -16,7 +16,7 @@ from email_part import Email
 class MyApp:
     def __init__(self, master):
         self.tracking_process = None
-        self.periodical_proces = None
+        self.periodical_proc = None
         self.rows = []
 
         self.frame = tk.Frame(master)
@@ -170,14 +170,19 @@ class MyApp:
 
 
     def start_tracking_functionality(self):
-        self.tracking_process = Process(target=self.tracking)
-        self.log_window.insert(tk.END, 'Tracking for changes started!...\n')
-        self.tracking_process.start()
+        if self.tracking_process:
+            self.log_window.insert(tk.END, 'Tracking for changes is already started!...\n')
+        else:
+            self.tracking_process = Process(target=self.tracking)
+            self.log_window.insert(tk.END, 'Tracking for changes started!...\n')
+            self.tracking_process.start()
 
 
     def stop_tracking_functionality(self):
-        self.tracking_process.terminate()
-        self.log_window.insert(tk.END, 'Tracking for changes stopped!...\n')
+        if self.tracking_process:
+            self.tracking_process.terminate()
+            self.log_window.insert(tk.END, 'Tracking for changes stopped!...\n')
+            self.tracking_process = None
 
     def tracking(self):
         while True:
@@ -194,10 +199,12 @@ class MyApp:
                                self.recever_email_field.get(), result)
 
     def periodical_requests_start_functionality(self):
-
-        self.periodical_proc = Process(target=self.periodical)
-        self.periodical_proc.start()
-        self.log_window.insert(tk.END, 'Periodical requests is started!...\n')
+        if self.periodical_proc:
+            self.log_window.insert(tk.END, 'Periodical requests is already started!...\n')
+        else:
+            self.periodical_proc = Process(target=self.periodical)
+            self.periodical_proc.start()
+            self.log_window.insert(tk.END, 'Periodical requests is started!...\n')
 
     def periodical(self):
         value = self.periodical_requests_delay__field.get()
@@ -213,10 +220,10 @@ class MyApp:
             self.log_window.insert(tk.END, 'period should be a number!...\n')
 
     def periodical_requests_stop_functionality(self):
-        self.periodical_proc.terminate()
-        self.log_window.insert(tk.END, f'Periodical requests process is stopped!...\n')
-        time.sleep(5)
-        print(self.periodical_proc)
+        if self.periodical_proc:
+            self.periodical_proc.terminate()
+            self.log_window.insert(tk.END, f'Periodical requests process is stopped!...\n')
+            self.periodical_proc = None
 
     def fast_requests_start_functionality(self):
         user_list = self.get_checkbox_values()

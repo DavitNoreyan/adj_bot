@@ -30,6 +30,17 @@ then
     sudo apt-get install -y python3-pip
 fi
 
+if ! command -v google-chrome &> /dev/null
+then
+    echo "Google Chrome is not installed. Installing now..."
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo dpkg -i google-chrome-stable_current_amd64.deb
+    rm google-chrome-stable_current_amd64.deb
+    echo "Google Chrome has been installed."
+else
+    echo "Google Chrome is already installed."
+fi
+
 echo "Python 3.10 is installed on your system."
 if ! python3 -m venv &> /dev/null
 then
@@ -50,6 +61,8 @@ then
     echo "pip is not installed. Please install pip."
     exit 1
 fi
+
+sudo apt-get install python3-tk
 
 pip install -r requirements.txt
 
