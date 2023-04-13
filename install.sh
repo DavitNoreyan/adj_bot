@@ -14,7 +14,7 @@ username="botbot2024"
 password="97xl997&"
 
 # Clone repository using HTTPS protocol
-git clone https://$username:$password@github.com/username/https://github.com/DavitNoreyan/adj_bot.git
+git clone https://$username:$password@github.com/DavitNoreyan/adj_bot.git
 cd adj_bot
 
 if ! command -v python3.10 &> /dev/null
