@@ -23,6 +23,13 @@ then
     exit 1
 fi
 
+if ! command -v pip &> /dev/null
+then
+    # Install pip
+    sudo apt-get update
+    sudo apt-get install -y python3-pip
+fi
+
 echo "Python 3.10 is installed on your system."
 if ! python3 -m venv &> /dev/null
 then
