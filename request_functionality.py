@@ -27,18 +27,24 @@ class Requests:
                 async with session.post(url=self.url, data=payload) as response:
                     self.logger.info(f'fast request status code is {response.status}')
 
-    async def request_periodical(self, user_id, period):
+    async def request_periodical(self, user_id, period, duration):
         self.check_server_availavlity(user_id)
+        start = datetime.datetime.now()
         while True:
+            end = datetime.datetime.now()
+            delta = end - start
+            if delta.seconds > duration:
+                break
             box_num = randint(1, 20)
             async with aiohttp.ClientSession() as session:
+                # for _ in range(10):
                 payload = Constants.PAYLOAD
                 payload['userID'] = user_id
                 payload['boxNum'] = f'{box_num}'
                 async with session.post(url=self.url, data=payload) as response:
                     self.logger.info(f'periodical request status code is {response.content}')
-                    self.logger.info(f'wait {period}')
-                time.sleep(int(period))
+                    self.logger.info(f'wait {period/ 40}')
+            time.sleep(float(period/40))
 
     def get_prize_chance_count(self, user_id):
         self.check_server_availavlity(user_id)
@@ -49,7 +55,7 @@ class Requests:
         return json.loads(response.content)
 
     def check_bodies(self, start_json, end_json):
-        if start_json.get('cnt').get('count_car') != end_json.get('cnt').get('count_car'):
+        if start_json.get('cnt').get('count_car') == end_json.get('cnt').get('count_car'):
             self.logger.info(f'available is change in Car...')
             return 'Car'
         elif start_json.get('cnt').get('count_iphone') != end_json.get('cnt').get('count_iphone'):

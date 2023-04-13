@@ -85,6 +85,13 @@ class MyApp:
         self.periodical_requests_delay__field = tk.Entry(self.periodical_requests_section)
         self.periodical_requests_delay__field.grid(row=5, column=0, padx=10, pady=10)
 
+        self.periodical_requests_duration_label = tk.Label(self.periodical_requests_section, text="Requests Duration Seconds",
+                                                        fg="black")
+        self.periodical_requests_duration_label.grid(row=6, column=0, padx=10, pady=10)
+        self.periodical_requests_duration__field = tk.Entry(self.periodical_requests_section)
+        self.periodical_requests_duration__field.grid(row=7, column=0, padx=10, pady=10)
+
+
         self.periodical_requests_start_button = tk.Button(self.periodical_requests_section, text='Start',
                                                           command=self.periodical_requests_start_functionality)
         self.periodical_requests_start_button.grid(row=5, column=1, padx=10, pady=10)
@@ -165,10 +172,6 @@ class MyApp:
         start_row = 0
         self.create_table(start_row, user_list)
 
-
-
-
-
     def start_tracking_functionality(self):
         if self.tracking_process:
             self.log_window.insert(tk.END, 'Tracking for changes is already started!...\n')
@@ -176,7 +179,6 @@ class MyApp:
             self.tracking_process = Process(target=self.tracking)
             self.log_window.insert(tk.END, 'Tracking for changes started!...\n')
             self.tracking_process.start()
-
 
     def stop_tracking_functionality(self):
         if self.tracking_process:
@@ -187,7 +189,7 @@ class MyApp:
     def tracking(self):
         while True:
             rec = Requests()
-            period = 30
+            period = 5
             if len(self.rows) > 0:
                 user_id = choice(self.rows)[2].cget('text')
                 start_json = rec.get_prize_chance_count(user_id=user_id)
@@ -209,13 +211,17 @@ class MyApp:
     def periodical(self):
         value = self.periodical_requests_delay__field.get()
         self.log_window.insert(tk.END, f'Periodical requests delay is {value}!...\n')
+        duration = self.periodical_requests_duration__field.get()
+        self.log_window.insert(tk.END, f'Periodical requests duration is {duration}!...\n')
         true_rows = self.get_checkbox_values()
-        if value.isdigit():
-            period = int(value)
-            for var, checkbox, user_id_header, username_header, chance_count, delete_button in true_rows:
-                self.log_window.insert(tk.END,
-                                       f'Periodical requests for {user_id_header.cget("text")} {username_header.cget("text")} user!...\n')
-                asyncio.run(Requests().request_periodical(user_id=user_id_header.cget('text'), period=period))
+        if value.isnumeric():
+            period = float(value)
+            if duration.isnumeric():
+                int_duration = int(duration)
+                for var, checkbox, user_id_header, username_header, chance_count, delete_button in true_rows:
+                    self.log_window.insert(tk.END,
+                                           f'Periodical requests for {user_id_header.cget("text")} {username_header.cget("text")} user, duration is {duration}!...\n')
+                    asyncio.run(Requests().request_periodical(user_id=user_id_header.cget('text'), period=period, duration=int_duration))
         else:
             self.log_window.insert(tk.END, 'period should be a number!...\n')
 

@@ -7,3 +7,4 @@ install_chocolatey.bat
 install_python_and_requirements.bat
 discription.txt
 env/
+test.py
