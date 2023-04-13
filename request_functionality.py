@@ -55,7 +55,7 @@ class Requests:
         return json.loads(response.content)
 
     def check_bodies(self, start_json, end_json):
-        if start_json.get('cnt').get('count_car') == end_json.get('cnt').get('count_car'):
+        if start_json.get('cnt').get('count_car') != end_json.get('cnt').get('count_car'):
             self.logger.info(f'available is change in Car...')
             return 'Car'
         elif start_json.get('cnt').get('count_iphone') != end_json.get('cnt').get('count_iphone'):
