@@ -78,7 +78,7 @@ class MyApp:
 
         self.periodical_requests_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
         self.periodical_requests_section.grid(row=1, column=1, padx=10, pady=10, sticky="nw")
-        self.periodical_requests_delay_label = tk.Label(self.periodical_requests_section, text="Requests Delay seconds",
+        self.periodical_requests_delay_label = tk.Label(self.periodical_requests_section, text="Requests Delay Value/40 Seconds",
                                                         fg="black")
         self.periodical_requests_delay_label.grid(row=4, column=0, padx=10, pady=10)
 
@@ -115,7 +115,7 @@ class MyApp:
 
         self.log_window_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
         self.log_window_section.grid(row=0, column=3, columnspan=5, rowspan=10, padx=20, pady=1, sticky="nw")
-        self.log_window = tk.Text(self.log_window_section, width=70, height=30)
+        self.log_window = tk.Text(self.log_window_section, width=40, height=30)
         self.log_window.grid(row=0, column=0)
         self.set_free_rows()
         self.user_table_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
@@ -259,7 +259,8 @@ class MyApp:
         self.log_window.insert(tk.END, 'Users chances is synced!...\n')
 
     def submit_button_functionality(self):
-        self.submit_proc = Thread(target=self.submit).start()
+        self.submit_proc = Thread(target=self.submit)
+        self.submit_proc.start()
 
     def submit(self):
         start_column = 0
@@ -267,10 +268,10 @@ class MyApp:
         auth = Authorization()
         username = self.username_field.get()
         password = self.password_field.get()
-        self.log_window.insert(tk.END, f'Authorization is started for {username}please wait several seconds....\n')
+        self.log_window.insert(tk.END, f'Authorization is started for {username} please wait several seconds....\n')
         auth.authorization(username, password)
         message, user_id = auth.write_user_in_db()
-        self.log_window.insert(tk.END, f'Status of adding user {username} is {message}\n')
+        self.log_window.insert(tk.END, f'Status of adding user {username} is {message}....\n')
         if user_id:
             row = len(self.rows)
             var, checkbox, user_id_header, username_header, chance_count_header, delete_button = self.create_row(row,
