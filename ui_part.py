@@ -182,7 +182,7 @@ class MyApp:
     def tracking(self):
         while True:
             rec = Requests()
-            period = 30
+            period = 15
             user_id = choice(self.rows)[2].cget('text')
             start_json = rec.get_prize_chance_count(user_id=user_id)
             self.log_window.insert(tk.END, 'Waiting 30 seconds!...\n')
