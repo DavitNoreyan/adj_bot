@@ -182,7 +182,7 @@ class MyApp:
     def tracking(self):
         while True:
             rec = Requests()
-            period = 15
+            period = 30
             if len(self.rows) > 0:
                 user_id = choice(self.rows)[2].cget('text')
                 start_json = rec.get_prize_chance_count(user_id=user_id)
