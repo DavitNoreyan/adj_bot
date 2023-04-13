@@ -327,7 +327,10 @@ class MyApp:
 
 
 if __name__ == '__main__':
-    root = tk.Tk()
-    # root.attributes('-zoomed', True)
-    app = MyApp(root)
-    root.mainloop()
+    try:
+        root = tk.Tk()
+        # root.attributes('-zoomed', True)
+        app = MyApp(root)
+        root.mainloop()
+    except Exception as e:
+        print(e)

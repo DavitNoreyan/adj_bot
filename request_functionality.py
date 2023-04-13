@@ -116,4 +116,3 @@ if __name__ == '__main__':
     # dict_1 = obj.get_prize_chance_count(user_id='2852619').get("SpinIds").get('avialable_try')
     # print(dict_1)
     start_tict = obj.get_prize_chance_count(user_id='2852619')
-    print(obj.tracking_request(start_tict))
