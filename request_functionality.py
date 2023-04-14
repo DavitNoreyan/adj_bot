@@ -27,24 +27,26 @@ class Requests:
                 async with session.post(url=self.url, data=payload) as response:
                     self.logger.info(f'fast request status code is {response.status}')
 
-    async def request_periodical(self, user_id, period, duration):
-        self.check_server_availavlity(user_id)
+    async def request_periodical(self, user, user_list, period, duration):
+        self.check_server_availavlity(user[2].cget('text'))
         start = datetime.datetime.now()
         while True:
-            end = datetime.datetime.now()
-            delta = end - start
-            if delta.seconds > duration:
-                break
-            box_num = randint(1, 20)
-            async with aiohttp.ClientSession() as session:
-                # for _ in range(10):
-                payload = Constants.PAYLOAD
-                payload['userID'] = user_id
-                payload['boxNum'] = f'{box_num}'
-                async with session.post(url=self.url, data=payload) as response:
-                    self.logger.info(f'periodical request status code is {response.content}')
-                    self.logger.info(f'wait {period/ 40}')
-            time.sleep(float(period/40))
+            for var, checkbox, user_id_header, username_header, chance_count, delete_button in user_list:
+                end = datetime.datetime.now()
+                delta = end - start
+                if delta.seconds > duration:
+                    break
+                box_num = randint(1, 20)
+                async with aiohttp.ClientSession() as session:
+                    # for _ in range(10):
+                    payload = Constants.PAYLOAD
+                    payload['userID'] = user_id_header.cget('text')
+                    payload['boxNum'] = f'{box_num}'
+                    async with session.post(url=self.url, data=payload) as response:
+                        self.logger.info(
+                            f'periodical request status code is {response.status} for user {user_id_header.cget("text")}')
+                        self.logger.info(f'wait {period / 40}')
+            time.sleep(float(period / 40))
 
     def get_prize_chance_count(self, user_id):
         self.check_server_availavlity(user_id)

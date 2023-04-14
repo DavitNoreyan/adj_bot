@@ -11,6 +11,7 @@ from request_functionality import Requests
 from auth_page import Authorization
 from database import Database
 from email_part import Email
+import concurrent.futures
 
 
 class MyApp:
@@ -78,19 +79,20 @@ class MyApp:
 
         self.periodical_requests_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
         self.periodical_requests_section.grid(row=1, column=1, padx=10, pady=10, sticky="nw")
-        self.periodical_requests_delay_label = tk.Label(self.periodical_requests_section, text="Requests Delay Value/40 Seconds",
+        self.periodical_requests_delay_label = tk.Label(self.periodical_requests_section,
+                                                        text="Requests Delay Value/40 Seconds",
                                                         fg="black")
         self.periodical_requests_delay_label.grid(row=4, column=0, padx=10, pady=10)
 
         self.periodical_requests_delay__field = tk.Entry(self.periodical_requests_section)
         self.periodical_requests_delay__field.grid(row=5, column=0, padx=10, pady=10)
 
-        self.periodical_requests_duration_label = tk.Label(self.periodical_requests_section, text="Requests Duration Seconds",
-                                                        fg="black")
+        self.periodical_requests_duration_label = tk.Label(self.periodical_requests_section,
+                                                           text="Requests Duration Seconds",
+                                                           fg="black")
         self.periodical_requests_duration_label.grid(row=6, column=0, padx=10, pady=10)
         self.periodical_requests_duration__field = tk.Entry(self.periodical_requests_section)
         self.periodical_requests_duration__field.grid(row=7, column=0, padx=10, pady=10)
-
 
         self.periodical_requests_start_button = tk.Button(self.periodical_requests_section, text='Start',
                                                           command=self.periodical_requests_start_functionality)
@@ -218,10 +220,11 @@ class MyApp:
             period = float(value)
             if duration.isnumeric():
                 int_duration = int(duration)
-                for var, checkbox, user_id_header, username_header, chance_count, delete_button in true_rows:
-                    self.log_window.insert(tk.END,
-                                           f'Periodical requests for {user_id_header.cget("text")} {username_header.cget("text")} user, duration is {duration}!...\n')
-                    asyncio.run(Requests().request_periodical(user_id=user_id_header.cget('text'), period=period, duration=int_duration))
+                if true_rows:
+                    user = choice(true_rows)
+                    asyncio.run(Requests().request_periodical(user=user, user_list=true_rows, period=period,
+                                                              duration=int_duration))
+
         else:
             self.log_window.insert(tk.END, 'period should be a number!...\n')
 
