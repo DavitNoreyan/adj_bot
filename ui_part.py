@@ -4,14 +4,13 @@ from random import choice
 from tkinter import ttk
 
 from multiprocessing import Process, get_context
-from threading import Thread, Event
+from threading import Thread
 import asyncio
 
 from request_functionality import Requests
 from auth_page import Authorization
 from database import Database
 from email_part import Email
-import concurrent.futures
 
 
 class MyApp:
@@ -122,6 +121,18 @@ class MyApp:
         self.set_free_rows()
         self.user_table_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
         self.user_table_section.grid(row=1, column=0, rowspan=20, padx=10, pady=10, sticky="nw")
+        self.canvas = tk.Canvas(self.user_table_section)
+        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.scrollbar = tk.Scrollbar(self.user_table_section, orient=tk.VERTICAL, command=self.canvas.yview)
+        self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+        self.canvas.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+        self.user_table_frame = tk.Frame(self.canvas)
+        self.canvas.create_window((0, 0), window=self.user_table_frame, anchor="nw")
+        self.user_table_frame.update_idletasks()
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        self.canvas.config(width=450, height=400)
+
         self.create_by_users()
         self.sync_db_button = tk.Button(self.section1, text='Sync User Chances',
                                         command=self.sync_db_functionality)
@@ -305,16 +316,16 @@ class MyApp:
 
     def create_row(self, row, username, user_id, chance_count, start_column):
         var = tk.BooleanVar()
-        checkbox = tk.Checkbutton(self.user_table_section, text='', variable=var)
+        checkbox = tk.Checkbutton(self.user_table_frame, text='', variable=var)
         checkbox.grid(row=row, column=start_column, padx=10, pady=10)
-        user_id_header = tk.Label(self.user_table_section, text=f"{user_id}", fg="black")
+        user_id_header = tk.Label(self.user_table_frame, text=f"{user_id}", fg="black")
         user_id_header.grid(row=row, column=start_column + 1, padx=10, pady=10)
-        username_header = tk.Label(self.user_table_section, text=f"{username}", fg="black")
+        username_header = tk.Label(self.user_table_frame, text=f"{username}", fg="black")
         username_header.grid(row=row, column=start_column + 2, padx=10, pady=10)
-        chance_count_header = tk.Label(self.user_table_section, text=f"{chance_count}", fg="black")
+        chance_count_header = tk.Label(self.user_table_frame, text=f"{chance_count}", fg="black")
         chance_count_header.grid(row=row, column=start_column + 3, padx=10, pady=10)
 
-        delete_button = tk.Button(self.user_table_section, text='Delete',
+        delete_button = tk.Button(self.user_table_frame, text='Delete',
                                   command=lambda row=row: self.delete_functionality(row))
         delete_button.grid(row=row, column=start_column + 4, padx=10, pady=10)
         return var, checkbox, user_id_header, username_header, chance_count_header, delete_button
@@ -324,7 +335,7 @@ class MyApp:
 
     def delete_functionality(self, row):
         db = Database()
-        db.delete_user_from_table(id=self.rows[row][2].cget('text'))
+        db.delete_user_from_table(id=self.rows[row][2].cget('text'), username=self.rows[row][3].cget('text'))
 
         for widget in self.rows[row][1:]:
             widget.grid_remove()

@@ -35,8 +35,8 @@ class Database:
         user = self.cursor.execute(query).fetchone()
         return user
 
-    def delete_user_from_table(self, id):
-        query = f'DELETE FROM users where user_id="{id}"'
+    def delete_user_from_table(self, id, username):
+        query = f'DELETE FROM users where user_id="{id}" AND username ="{username}";'
         self.cursor.execute(query)
         self.conn.commit()
 
@@ -51,7 +51,8 @@ class Database:
 if __name__ == '__main__':
     db = Database()
     db.create_table()
-    db.insert_user('davit', 'noreyan', '123456')
+    for i in range(10):
+        db.insert_user('davit', 'noreyan', f'123456{i}')
     print(db.get_all_users_from_db())
     print(db.get_one_user('123456'))
-    db.delete_user_from_table(1)
+    # db.delete_user_from_table(1)
