@@ -16,16 +16,17 @@ class Requests:
         self.url = Constants.REQUEST_URL
         self.logger = Logger
 
-    async def request(self, count, user_id):
-        self.check_server_availavlity(user_id)
+    async def request(self, count, user, user_list):
+        self.check_server_availavlity(user[2].cget('text'))
         async with aiohttp.ClientSession() as session:
             for _ in range(count):
-                box_num = randint(1, 20)
-                payload = Constants.PAYLOAD
-                payload['userID'] = user_id
-                payload['boxNum'] = f'{box_num}'
-                async with session.post(url=self.url, data=payload) as response:
-                    self.logger.info(f'fast request status code is {response.status}')
+                for one_user in user_list:
+                    box_num = randint(1, 20)
+                    payload = Constants.PAYLOAD
+                    payload['userID'] = one_user[2].cget('text')
+                    payload['boxNum'] = f'{box_num}'
+                    async with session.post(url=self.url, data=payload) as response:
+                        self.logger.info(f'fast request status code is {response.status} user is {one_user[2].cget("text")}')
 
     async def request_periodical(self, user, user_list, period, duration):
         self.check_server_availavlity(user[2].cget('text'))
@@ -112,9 +113,5 @@ class Requests:
 if __name__ == '__main__':
     start = datetime.datetime.now()
     obj = Requests()
-    # asyncio.run(obj.request(count=5, user_id='2852619'))
-    # end = datetime.datetime.now()
-    # print(end - start)
-    # dict_1 = obj.get_prize_chance_count(user_id='2852619').get("SpinIds").get('avialable_try')
-    # print(dict_1)
+
     start_tict = obj.get_prize_chance_count(user_id='2852619')

@@ -247,17 +247,11 @@ class MyApp:
 
     def fast_requests_start_functionality(self):
         user_list = self.get_checkbox_values()
+        user = choice(user_list)
         count = self.fast_requests_count_field.get()
         if count.isdigit():
-            int_count = int(count)
-            asyncio.run(self.fast_requests(count=int_count, user_list=user_list))
-
-    async def fast_requests(self, count, user_list):
-        for var, checkbox, user_id_header, username_header, chance_count, delete_button in user_list:
-            self.log_window.insert(tk.END,
-                                   f'Fast requests for {user_id_header.cget("text")} {username_header.cget("text")} user requests count is {count}!...\n')
             rec = Requests()
-            await rec.request(count=count, user_id=user_id_header.cget('text'))
+            asyncio.run(rec.request(count=int(count), user=user, user_list=user_list))
 
     def sync_db_functionality(self):
         req = Requests()
