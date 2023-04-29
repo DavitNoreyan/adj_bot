@@ -17,6 +17,7 @@ class MyApp:
     def __init__(self, master):
         self.tracking_process = None
         self.periodical_proc = None
+        self.fast_requests = None
         self.rows = []
 
         self.frame = tk.Frame(master)
@@ -111,8 +112,12 @@ class MyApp:
         self.fast_requests_count_field.grid(row=7, column=0, padx=10, pady=10)
 
         self.fast_requests_start_button = tk.Button(self.fast_request_section, text='Start',
-                                                    command=lambda: self.fast_requests_start_functionality())
+                                                    command=lambda: self.fast_req_start())
         self.fast_requests_start_button.grid(row=7, column=1, padx=10, pady=10)
+
+        self.fast_requests_stop_button = tk.Button(self.fast_request_section, text='Stop',
+                                                    command=lambda: self.fast_req_stop())
+        self.fast_requests_stop_button.grid(row=7, column=2, padx=10, pady=10)
 
         self.log_window_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
         self.log_window_section.grid(row=0, column=3, columnspan=5, rowspan=10, padx=20, pady=1, sticky="nw")
@@ -244,6 +249,20 @@ class MyApp:
             self.periodical_proc.terminate()
             self.log_window.insert(tk.END, f'Periodical requests process is stopped!...\n')
             self.periodical_proc = None
+
+    def fast_req_start(self):
+        if not self.fast_requests:
+            self.fast_requests = Process(target=self.fast_requests_start_functionality)
+            self.fast_requests.start()
+            self.log_window.insert(tk.END, f'Fast requests  started !...\n')
+        else:
+            self.log_window.insert(tk.END, f'Fast requests already started push Stop after Start!...\n')
+
+    def fast_req_stop(self):
+        if self.fast_requests:
+            self.fast_requests.terminate()
+            self.log_window.insert(tk.END, f'Fast requests  stoped !...\n')
+            self.fast_requests = None
 
     def fast_requests_start_functionality(self):
         user_list = self.get_checkbox_values()
