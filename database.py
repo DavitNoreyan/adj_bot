@@ -17,11 +17,12 @@ class Database:
                 "username varchar(30) not null, " \
                 "password varchar(30) not null, " \
                 "user_id varchar(30) not null," \
+                "user_hash varchar(30) not null," \
                 "chance_count varchar(30));"
         self.cursor.execute(query)
 
-    def insert_user(self, username, password, user_id):
-        query = f'INSERT INTO users (username, password, user_id) values("{username}", "{password}", "{user_id}");'
+    def insert_user(self, username, password, user_id, user_hash):
+        query = f'INSERT INTO users (username, password, user_id, user_hash) values("{username}", "{password}", "{user_id}", "{user_hash}");'
         self.cursor.execute(query)
         self.conn.commit()
 
@@ -48,11 +49,13 @@ class Database:
 
 
 
+
+
 if __name__ == '__main__':
     db = Database()
     db.create_table()
-    for i in range(10):
-        db.insert_user('davit', 'noreyan', f'123456{i}')
-    print(db.get_all_users_from_db())
-    print(db.get_one_user('123456'))
-    # db.delete_user_from_table(1)
+    # for i in range(10):
+    #     db.insert_user('davit', 'noreyan', f'123456{i}')
+    # print(db.get_all_users_from_db())
+    # print(db.get_one_user('123456'))
+    # # db.delete_user_from_table(1)

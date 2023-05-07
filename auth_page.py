@@ -53,12 +53,19 @@ class Authorization:
                             user_id = response_body["UserID"]
                             return user_id
 
+    def get_user_hash(self):
+        for request in self.driver.requests:
+            if request.method == 'GET':
+                if 'https://salesiq.zohopublic.com/visitor/v2/channels/website?widgetcode' in request.url:
+                    return request.params.get('widgetcode')
+
     def write_user_in_db(self):
         db = Database()
         user_id = self.get_user_id_from_response()
+        user_hash = self.get_user_hash()
         if user_id:
             db.create_table()
-            db.insert_user(username=self.username, password=self.password, user_id=user_id)
+            db.insert_user(username=self.username, password=self.password, user_id=user_id, user_hash=user_hash)
             return 'Done', user_id
         return "Something is wrong", ''
 

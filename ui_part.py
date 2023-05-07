@@ -1,3 +1,4 @@
+import datetime
 import time
 import tkinter as tk
 from random import choice
@@ -11,6 +12,7 @@ from request_functionality import Requests
 from auth_page import Authorization
 from database import Database
 from email_part import Email
+from logger import Logger
 
 
 class MyApp:
@@ -18,6 +20,7 @@ class MyApp:
         self.tracking_process = None
         self.periodical_proc = None
         self.fast_requests = None
+        self.start_process = None
         self.rows = []
 
         self.frame = tk.Frame(master)
@@ -73,10 +76,6 @@ class MyApp:
                                               command=self.stop_tracking_functionality)
         self.stop_tracking_button.grid(row=3, column=2, padx=10, pady=10)
 
-        # self.save_email_and_password_button = tk.Button(self.tracking_with_telegram_section, text='Save',
-        #                                                 command=self.save_email_and_password_functionality)
-        # self.save_email_and_password_button.grid(row=1, column=2, padx=10, pady=10)
-
         self.periodical_requests_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
         self.periodical_requests_section.grid(row=1, column=1, padx=10, pady=10, sticky="nw")
         self.periodical_requests_delay_label = tk.Label(self.periodical_requests_section,
@@ -116,14 +115,26 @@ class MyApp:
         self.fast_requests_start_button.grid(row=7, column=1, padx=10, pady=10)
 
         self.fast_requests_stop_button = tk.Button(self.fast_request_section, text='Stop',
-                                                    command=lambda: self.fast_req_stop())
+                                                   command=lambda: self.fast_req_stop())
         self.fast_requests_stop_button.grid(row=7, column=2, padx=10, pady=10)
+
+        self.chance_opening_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
+        self.chance_opening_section.grid(row=3, column=1, padx=10, pady=10, sticky="nw")
+
+        self.chance_opening_label = tk.Label(self.chance_opening_section, text="Chance Valid Opening",fg="black")
+        self.chance_opening_label.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
+
+        self.chance_opening_start_button = tk.Button(self.chance_opening_section, text='Start',command=self.start_valid_chance)
+        self.chance_opening_start_button.grid(row=1, column=0, padx=10, pady=10, sticky="nw")
+
+        self.chance_opening_stop_button = tk.Button(self.chance_opening_section, text='Stop',command=self.stop_valid_chance)
+        self.chance_opening_stop_button.grid(row=1, column=1, padx=10, pady=10, sticky="nw")
 
         self.log_window_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
         self.log_window_section.grid(row=0, column=3, columnspan=5, rowspan=10, padx=20, pady=1, sticky="nw")
         self.log_window = tk.Text(self.log_window_section, width=40, height=30)
         self.log_window.grid(row=0, column=0)
-        self.set_free_rows()
+        # self.set_free_rows()
         self.user_table_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
         self.user_table_section.grid(row=1, column=0, rowspan=20, padx=10, pady=10, sticky="nw")
         self.canvas = tk.Canvas(self.user_table_section)
@@ -141,48 +152,48 @@ class MyApp:
         self.create_by_users()
         self.sync_db_button = tk.Button(self.section1, text='Sync User Chances',
                                         command=self.sync_db_functionality)
-        self.sync_db_button.grid(row=3, column=1, padx=10, pady=10, sticky="nw")
+        self.sync_db_button.grid(row=3, column=3, padx=10, pady=10, sticky="nw")
 
     def log_to_log_window(self, log):
         pass
 
-    def set_free_rows(self):
-        self.row1 = tk.Label(self.section1, text="")
-        self.row1.grid(row=0, column=20, padx=10, pady=10)
-        self.row2 = tk.Label(self.section1, text="")
-        self.row2.grid(row=1, column=20, padx=10, pady=10)
-        self.row3 = tk.Label(self.section1, text="")
-        self.row3.grid(row=2, column=20, padx=10, pady=10)
-        self.row4 = tk.Label(self.section1, text="")
-        self.row4.grid(row=3, column=20, padx=10, pady=10)
-        self.row5 = tk.Label(self.section1, text="")
-        self.row5.grid(row=4, column=20, padx=10, pady=10)
-        self.row6 = tk.Label(self.section1, text="")
-        self.row6.grid(row=5, column=20, padx=10, pady=10)
-        self.row7 = tk.Label(self.section1, text="")
-        self.row7.grid(row=6, column=20, padx=10, pady=10)
-        self.row8 = tk.Label(self.section1, text="")
-        self.row8.grid(row=7, column=20, padx=10, pady=10)
-        self.row9 = tk.Label(self.section1, text="")
-        self.row9.grid(row=8, column=20, padx=10, pady=10)
-        self.row10 = tk.Label(self.section1, text="")
-        self.row10.grid(row=9, column=20, padx=10, pady=10)
-        self.row11 = tk.Label(self.section1, text="")
-        self.row11.grid(row=10, column=20, padx=10, pady=10)
-        self.row12 = tk.Label(self.section1, text="")
-        self.row12.grid(row=11, column=20, padx=10, pady=10)
-        self.row13 = tk.Label(self.section1, text="")
-        self.row13.grid(row=12, column=20, padx=10, pady=10)
-        self.row14 = tk.Label(self.section1, text="")
-        self.row14.grid(row=13, column=20, padx=10, pady=10)
-        self.row15 = tk.Label(self.section1, text="")
-        self.row15.grid(row=14, column=20, padx=10, pady=10)
-        self.row16 = tk.Label(self.section1, text="")
-        self.row16.grid(row=15, column=20, padx=10, pady=10)
-        self.row17 = tk.Label(self.section1, text="")
-        self.row17.grid(row=16, column=20, padx=10, pady=10)
-        self.row18 = tk.Label(self.section1, text="")
-        self.row18.grid(row=1, column=2, padx=10, pady=10)
+    # def set_free_rows(self):
+    #     self.row1 = tk.Label(self.section1, text="")
+    #     self.row1.grid(row=0, column=20, padx=10, pady=10)
+    #     self.row2 = tk.Label(self.section1, text="")
+    #     self.row2.grid(row=1, column=20, padx=10, pady=10)
+    #     self.row3 = tk.Label(self.section1, text="")
+    #     self.row3.grid(row=2, column=20, padx=10, pady=10)
+    #     self.row4 = tk.Label(self.section1, text="")
+    #     self.row4.grid(row=3, column=20, padx=10, pady=10)
+    #     self.row5 = tk.Label(self.section1, text="")
+    #     self.row5.grid(row=4, column=20, padx=10, pady=10)
+    #     self.row6 = tk.Label(self.section1, text="")
+    #     self.row6.grid(row=5, column=20, padx=10, pady=10)
+    #     self.row7 = tk.Label(self.section1, text="")
+    #     self.row7.grid(row=6, column=20, padx=10, pady=10)
+    #     self.row8 = tk.Label(self.section1, text="")
+    #     self.row8.grid(row=7, column=20, padx=10, pady=10)
+    #     self.row9 = tk.Label(self.section1, text="")
+    #     self.row9.grid(row=8, column=20, padx=10, pady=10)
+    #     self.row10 = tk.Label(self.section1, text="")
+    #     self.row10.grid(row=9, column=20, padx=10, pady=10)
+    #     self.row11 = tk.Label(self.section1, text="")
+    #     self.row11.grid(row=10, column=20, padx=10, pady=10)
+    #     self.row12 = tk.Label(self.section1, text="")
+    #     self.row12.grid(row=11, column=20, padx=10, pady=10)
+    #     self.row13 = tk.Label(self.section1, text="")
+    #     self.row13.grid(row=12, column=20, padx=10, pady=10)
+    #     self.row14 = tk.Label(self.section1, text="")
+    #     self.row14.grid(row=13, column=20, padx=10, pady=10)
+    #     self.row15 = tk.Label(self.section1, text="")
+    #     self.row15.grid(row=14, column=20, padx=10, pady=10)
+    #     self.row16 = tk.Label(self.section1, text="")
+    #     self.row16.grid(row=15, column=20, padx=10, pady=10)
+    #     self.row17 = tk.Label(self.section1, text="")
+    #     self.row17.grid(row=16, column=20, padx=10, pady=10)
+    #     self.row18 = tk.Label(self.section1, text="")
+    #     self.row18.grid(row=1, column=2, padx=10, pady=10)
 
     def create_by_users(self):
         db = Database()
@@ -265,12 +276,17 @@ class MyApp:
             self.fast_requests = None
 
     def fast_requests_start_functionality(self):
+        start = datetime.datetime.now()
         user_list = self.get_checkbox_values()
         user = choice(user_list)
         count = self.fast_requests_count_field.get()
         if count.isdigit():
             rec = Requests()
             asyncio.run(rec.request(count=int(count), user=user, user_list=user_list))
+        end = datetime.datetime.now()
+        delta = end - start
+        Logger.info(f'{delta}')
+        self.log_window.insert(tk.END, f'Fast requests  duration is {delta}...\n')
 
     def sync_db_functionality(self):
         req = Requests()
@@ -318,7 +334,7 @@ class MyApp:
     def create_table(self, start_column, user_list):
         self.rows = []
         row = 0
-        for id, username, password, user_id, chance_count in user_list:
+        for id, username, password, user_id, user_hash, chance_count in user_list:
             var, checkbox, user_id_header, username_header, chance_count_header, delete_button = self.create_row(row,
                                                                                                                  username,
                                                                                                                  user_id,
@@ -353,11 +369,34 @@ class MyApp:
         for widget in self.rows[row][1:]:
             widget.grid_remove()
 
+    def start_valid_chance(self):
+        if not self.start_process:
+            self.start_process = Process(target=self.start_functionality)
+            self.log_window.insert(tk.END, 'Process is started!...\n')
+            self.start_process.start()
+        else:
+            self.log_window.insert(tk.END, 'Process is already started!...\n')
+
+    def stop_valid_chance(self):
+        if self.start_process:
+            self.start_process.terminate()
+            self.log_window.insert(tk.END, 'Process is stopped!...\n')
+            self.start_process = None
+
+    def start_functionality(self):
+        while True:
+            user_list = self.get_checkbox_values()
+            for user in user_list:
+                user_id = user[2].cget('text')
+                req = Requests()
+                message = req.request_for_prize(user_id, 1)
+                if message:
+                    self.log_window.insert(tk.END, f'user {user_id} get {message} symbol!...\n')
+
 
 if __name__ == '__main__':
     try:
         root = tk.Tk()
-        # root.attributes('-zoomed', True)
         app = MyApp(root)
         root.mainloop()
     except Exception as e:
