@@ -112,7 +112,7 @@ class Requests:
 
     @staticmethod
     def random_request(url, payload, headers):
-        for _ in range(15):
+        for _ in range(10):
             box = randint(0, 19)
             payload['boxNum'] = f'{box}'
             requests.post(url=url, data=payload, headers=headers)
