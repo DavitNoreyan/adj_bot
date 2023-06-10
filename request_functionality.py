@@ -251,21 +251,27 @@ class Requests:
             chance = chance_and_board.get('chance')
             board = chance_and_board.get('board')
             board_places = [f'{num}' for num in range(1, 21)]
+            board_stack = [av_prize.get('PRIZE_ID') for av_prize in board]
             if chance:
                 self.logger.info(f'opening for user {user} chance count is {chance}')
-                if '301' in board or '302' in board or '303' in board or '304' in board:
+                if board:
+                    places = [place.get('PLACE_') for place in board]
+                    for n in places:
+                        board_places.remove(n)
+                    box = choice(board_places)
+                else:
+                    box = f"{randint(1, 20)}"
+                if '301' in board_stack or '302' in board_stack or '303' in board_stack or '304' in board_stack:
                     self.refresh_request(user)
                     self.logger.info(f'trying refresh for user {user}')
-                else:
-                    if board:
-                        places = [place.get('PLACE_') for place in board]
-                        for n in places:
-                            board_places.remove(n)
-                        box = choice(board_places)
-                    else:
-                        box = randint(1, 20)
-                    prize = self.standart_request(user=user, box=box)
-                    self.logger.info(f'prize is {prize}')
+                    time.sleep(2)
+                prize = self.standart_request(user=user, box=box)
+                self.logger.info(f'prize is {prize}')
+                if not prize:
+                    payload = Constants.star_box_payload
+                    payload['userID'] = f"{user}"
+                    payload['boxNum'] = f"{randint(1, 4)}"
+                    requests.post(url=self.url, headers=Constants.REQUEST_HEADERS, data=payload)
             else:
                 self.logger.info(f'chance count is 0 for user {user}')
                 return

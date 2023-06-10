@@ -58,7 +58,7 @@ class Constants:
 
     }
     star_box_payload = {
-        "userID": "2632365",
+        "userID": "",
         "curLang": "hy",
         "boxNum": "1",
         "wsfilename": "Ajax-StarGame.php",
