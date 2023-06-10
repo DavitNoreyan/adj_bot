@@ -6,14 +6,13 @@ current_file_path = os.path.abspath(__file__)
 class Constants:
     AUTHORIZATION_PAGE_URL = 'https://www.adjarabet.am/hy/Promo/volcanicwinnings'
     DB_PATH = os.path.join(os.path.dirname(current_file_path), 'app_db.db')
-    REQUEST_URL = "https://promos.www.adjarabet.am/slotboyard/WebServices/handler.php"
-    dsdasdasd =   'https://promos.www.adjarabet.am/slotboyard/WebServices/handler.php'
+    REQUEST_URL = "https://promos.www.adjarabet.am/xaxerikarusel/WebServices/handler.php"
     PAYLOAD = {
-        'userID': '2852619',
+        'userID': '',
         'curLang': 'hy',
-        'boxNum': '2',
-        'Level': 'NaN',
+        'boxNum': '4',
         'spinType': '1',
+        'gameID': '1',
         'pMultiplier': '1',
         'wsfilename': 'Ajax-Game.php',
         'env': 'production',
@@ -21,23 +20,24 @@ class Constants:
         'promoCorePath': '/var/www/html/promo.v.5',
     }
     PRIZE_PAYLOAD = {
-        'userID': '2852619',
-        'curLang': 'hy',
-        'PeriodCurr': '7',
-        'wsfilename': 'Ajax-Main.php',
-        'env': 'production',
-        'domain': 'am',
-        'promoCorePath': '/var/www/html/promo.v.5',
-    }
+    'userID': '',
+    'curLang': 'hy',
+    'wsfilename': 'Ajax-Live.php',
+    'env': 'production',
+    'domain': 'am',
+    'promoCorePath': '/var/www/html/promo.v.5',
+    'handlerHash': 'a718cbda40712cc3adea089ac6a1d571082767efde80a381f179aa98bc2846b7'
+}
     REFRESH_PAYLOAD = {
-        "userID": "6312449",
-        "curLang": "hy",
-        "wsfilename": "Ajax-Cashout.php",
-        "env": "production",
-        "domain": "am",
-        "promoCorePath": "/var/www/html/promo.v.5",
-        "handlerHash": "a718cbda40712cc3adea089ac6a1d571082767efde80a381f179aa98bc2846b7"
-    }
+    "userID": "",
+    "gameID": "1",
+    "curLang": "hy",
+    "wsfilename": "Ajax-Cashout.php",
+    "env": "production",
+    "domain": "am",
+    "promoCorePath": "/var/www/html/promo.v.5",
+    "handlerHash": "a718cbda40712cc3adea089ac6a1d571082767efde80a381f179aa98bc2846b7"
+}
     REQUEST_HEADERS = {
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate, br',
@@ -54,5 +54,17 @@ class Constants:
         'Sec-Fetch-Site': 'same-origin',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
         'X-Requested-With': 'XMLHttpRequest'
+
+
+    }
+    star_box_payload = {
+        "userID": "2632365",
+        "curLang": "hy",
+        "boxNum": "1",
+        "wsfilename": "Ajax-StarGame.php",
+        "env": "production",
+        "domain": "am",
+        "promoCorePath": "/var/www/html/promo.v.5",
+        "handlerHash": "a718cbda40712cc3adea089ac6a1d571082767efde80a381f179aa98bc2846b7"
     }
     VALID_PRIZE = ['206', '205', '1', '204', '2', '3', '35', '36', '33', '34']

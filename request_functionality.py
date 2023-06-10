@@ -1,11 +1,12 @@
 import asyncio
 import datetime
 import json
+import threading
 import time
 
 import requests
 import aiohttp
-from random import randint
+from random import randint, choice
 
 from constants import Constants
 from database import Database
@@ -220,6 +221,72 @@ class Requests:
                 return result
             self.logger.info(f'wait {period} seconds')
             time.sleep(period)
+
+    def standart_request(self, user, box):
+        payload = Constants.PAYLOAD
+        payload['userID'] = f'{user}'
+        payload['boxNum'] = f'{box}'
+        headers = Constants.REQUEST_HEADERS
+        url = Constants.REQUEST_URL
+        response = requests.post(url=url, data=payload, headers=headers)
+        return response.json().get('PrizeID')
+
+    def get_chance_and_board(self, user):
+        payload = Constants.PRIZE_PAYLOAD
+        payload['userID'] = f'{user}'
+        headers = Constants.REQUEST_HEADERS
+        response = json.loads(requests.post(url=self.url, data=payload, headers=headers).content)
+        spinids = response.get("SpinIds")
+        chance_count = spinids.get('avialable_try')
+        board = response.get('arrLive')
+        chance_and_board = {
+            'chance': int(chance_count),
+            'board': board
+        }
+        return chance_and_board
+
+    def standart_request_functionality(self, user, period):
+        while True:
+            chance_and_board = self.get_chance_and_board(user)
+            chance = chance_and_board.get('chance')
+            board = chance_and_board.get('board')
+            board_places = [f'{num}' for num in range(1, 21)]
+            if chance:
+                self.logger.info(f'opening for user {user} chance count is {chance}')
+                if '301' in board or '302' in board or '303' in board or '304' in board:
+                    self.refresh_request(user)
+                    self.logger.info(f'trying refresh for user {user}')
+                else:
+                    if board:
+                        places = [place.get('PLACE_') for place in board]
+                        for n in places:
+                            board_places.remove(n)
+                        box = choice(board_places)
+                    else:
+                        box = randint(1, 20)
+                    prize = self.standart_request(user=user, box=box)
+                    self.logger.info(f'prize is {prize}')
+            else:
+                self.logger.info(f'chance count is 0 for user {user}')
+                return
+            self.logger.info(f'wait {period} seconds for user {user}')
+            time.sleep(period)
+
+    def standart_requests_by_user_list(self, user_list, period):
+        while True:
+            proc_list = []
+            for user in user_list:
+                t = threading.Thread(target=self.standart_request_functionality, args=(user[2].cget('text'), period,))
+                proc_list.append(t)
+                t.start()
+                time.sleep(2)
+            for t in proc_list:
+                t.join()
+
+    def refresh_request(self, user):
+        refresh_payload = Constants.REFRESH_PAYLOAD
+        refresh_payload['userID'] = f"{user}"
+        requests.post(url=self.url, headers=Constants.REQUEST_HEADERS, data=refresh_payload)
 
 
 if __name__ == '__main__':

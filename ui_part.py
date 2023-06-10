@@ -21,6 +21,7 @@ class MyApp:
         self.periodical_proc = None
         self.fast_requests = None
         self.start_process = None
+        self.standard_proc = None
         self.rows = []
 
         self.frame = tk.Frame(master)
@@ -47,62 +48,62 @@ class MyApp:
                                        command=self.submit_button_functionality)
         self.submit_button.grid(row=1, column=2, padx=10, pady=10)
 
-        self.tracking_with_telegram_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
-        self.tracking_with_telegram_section.grid(row=0, column=1, padx=10, pady=10, sticky="nw")
-        self.sender_email_label = tk.Label(self.tracking_with_telegram_section, text="Sender Email", fg="black")
-        self.sender_email_label.grid(row=0, column=0, padx=10, pady=10)
+        # self.tracking_with_telegram_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
+        # self.tracking_with_telegram_section.grid(row=0, column=1, padx=10, pady=10, sticky="nw")
+        # self.sender_email_label = tk.Label(self.tracking_with_telegram_section, text="Sender Email", fg="black")
+        # self.sender_email_label.grid(row=0, column=0, padx=10, pady=10)
+        #
+        # self.sender_email_field = tk.Entry(self.tracking_with_telegram_section)
+        # self.sender_email_field.grid(row=1, column=0, padx=10, pady=10)
+        #
+        # self.sender_email_password_label = tk.Label(self.tracking_with_telegram_section, text="Sender Email Password",
+        #                                             fg="black")
+        # self.sender_email_password_label.grid(row=0, column=1, padx=10, pady=10)
+        #
+        # self.sender_email_password_field = tk.Entry(self.tracking_with_telegram_section)
+        # self.sender_email_password_field.grid(row=1, column=1, padx=10, pady=10)
+        #
+        # self.recever_email_label = tk.Label(self.tracking_with_telegram_section, text="Recipient Email", fg="black")
+        # self.recever_email_label.grid(row=2, column=0, padx=10, pady=10)
+        #
+        # self.recever_email_field = tk.Entry(self.tracking_with_telegram_section)
+        # self.recever_email_field.grid(row=3, column=0, padx=10, pady=10)
+        #
+        # self.start_tracking_button = tk.Button(self.tracking_with_telegram_section, text='Start',
+        #                                        command=self.start_tracking_functionality)
+        # self.start_tracking_button.grid(row=3, column=1, padx=10, pady=10)
+        #
+        # self.stop_tracking_button = tk.Button(self.tracking_with_telegram_section, text='Stop',
+        #                                       command=self.stop_tracking_functionality)
+        # self.stop_tracking_button.grid(row=3, column=2, padx=10, pady=10)
 
-        self.sender_email_field = tk.Entry(self.tracking_with_telegram_section)
-        self.sender_email_field.grid(row=1, column=0, padx=10, pady=10)
-
-        self.sender_email_password_label = tk.Label(self.tracking_with_telegram_section, text="Sender Email Password",
-                                                    fg="black")
-        self.sender_email_password_label.grid(row=0, column=1, padx=10, pady=10)
-
-        self.sender_email_password_field = tk.Entry(self.tracking_with_telegram_section)
-        self.sender_email_password_field.grid(row=1, column=1, padx=10, pady=10)
-
-        self.recever_email_label = tk.Label(self.tracking_with_telegram_section, text="Recipient Email", fg="black")
-        self.recever_email_label.grid(row=2, column=0, padx=10, pady=10)
-
-        self.recever_email_field = tk.Entry(self.tracking_with_telegram_section)
-        self.recever_email_field.grid(row=3, column=0, padx=10, pady=10)
-
-        self.start_tracking_button = tk.Button(self.tracking_with_telegram_section, text='Start',
-                                               command=self.start_tracking_functionality)
-        self.start_tracking_button.grid(row=3, column=1, padx=10, pady=10)
-
-        self.stop_tracking_button = tk.Button(self.tracking_with_telegram_section, text='Stop',
-                                              command=self.stop_tracking_functionality)
-        self.stop_tracking_button.grid(row=3, column=2, padx=10, pady=10)
-
-        self.periodical_requests_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
-        self.periodical_requests_section.grid(row=1, column=1, padx=10, pady=10, sticky="nw")
-        self.periodical_requests_delay_label = tk.Label(self.periodical_requests_section,
-                                                        text="Requests Delay Value/40 Seconds",
-                                                        fg="black")
-        self.periodical_requests_delay_label.grid(row=4, column=0, padx=10, pady=10)
-
-        self.periodical_requests_delay__field = tk.Entry(self.periodical_requests_section)
-        self.periodical_requests_delay__field.grid(row=5, column=0, padx=10, pady=10)
-
-        self.periodical_requests_duration_label = tk.Label(self.periodical_requests_section,
-                                                           text="Requests Duration Seconds",
-                                                           fg="black")
-        self.periodical_requests_duration_label.grid(row=6, column=0, padx=10, pady=10)
-        self.periodical_requests_duration__field = tk.Entry(self.periodical_requests_section)
-        self.periodical_requests_duration__field.grid(row=7, column=0, padx=10, pady=10)
-
-        self.periodical_requests_start_button = tk.Button(self.periodical_requests_section, text='Start',
-                                                          command=self.periodical_requests_start_functionality)
-        self.periodical_requests_start_button.grid(row=5, column=1, padx=10, pady=10)
-
-        self.periodical_requests_stop_button = tk.Button(self.periodical_requests_section, text='Stop',
-                                                         command=self.periodical_requests_stop_functionality)
-        self.periodical_requests_stop_button.grid(row=5, column=2, padx=10, pady=10)
+        # self.periodical_requests_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
+        # self.periodical_requests_section.grid(row=1, column=1, padx=10, pady=10, sticky="nw")
+        # self.periodical_requests_delay_label = tk.Label(self.periodical_requests_section,
+        #                                                 text="Requests Delay Value/40 Seconds",
+        #                                                 fg="black")
+        # self.periodical_requests_delay_label.grid(row=4, column=0, padx=10, pady=10)
+        #
+        # self.periodical_requests_delay__field = tk.Entry(self.periodical_requests_section)
+        # self.periodical_requests_delay__field.grid(row=5, column=0, padx=10, pady=10)
+        #
+        # self.periodical_requests_duration_label = tk.Label(self.periodical_requests_section,
+        #                                                    text="Requests Duration Seconds",
+        #                                                    fg="black")
+        # self.periodical_requests_duration_label.grid(row=6, column=0, padx=10, pady=10)
+        # self.periodical_requests_duration__field = tk.Entry(self.periodical_requests_section)
+        # self.periodical_requests_duration__field.grid(row=7, column=0, padx=10, pady=10)
+        #
+        # self.periodical_requests_start_button = tk.Button(self.periodical_requests_section, text='Start',
+        #                                                   command=self.periodical_requests_start_functionality)
+        # self.periodical_requests_start_button.grid(row=5, column=1, padx=10, pady=10)
+        #
+        # self.periodical_requests_stop_button = tk.Button(self.periodical_requests_section, text='Stop',
+        #                                                  command=self.periodical_requests_stop_functionality)
+        # self.periodical_requests_stop_button.grid(row=5, column=2, padx=10, pady=10)
 
         self.fast_request_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
-        self.fast_request_section.grid(row=2, column=1, padx=10, pady=10, sticky="nw")
+        self.fast_request_section.grid(row=0, column=1, padx=10, pady=10, sticky="nw")
         self.fast_requests_count_label = tk.Label(self.fast_request_section, text="Fast Requests Count",
                                                   fg="black")
         self.fast_requests_count_label.grid(row=6, column=0, padx=10, pady=10)
@@ -118,17 +119,30 @@ class MyApp:
                                                    command=lambda: self.fast_req_stop())
         self.fast_requests_stop_button.grid(row=7, column=2, padx=10, pady=10)
 
-        self.chance_opening_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
-        self.chance_opening_section.grid(row=3, column=1, padx=10, pady=10, sticky="nw")
+        # self.chance_opening_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
+        # self.chance_opening_section.grid(row=3, column=1, padx=10, pady=10, sticky="nw")
+        #
+        # self.chance_opening_label = tk.Label(self.chance_opening_section, text="Chance Valid Opening",fg="black")
+        # self.chance_opening_label.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
+        #
+        # self.chance_opening_start_button = tk.Button(self.chance_opening_section, text='Start',command=self.start_valid_chance)
+        # self.chance_opening_start_button.grid(row=1, column=0, padx=10, pady=10, sticky="nw")
+        #
+        # self.chance_opening_stop_button = tk.Button(self.chance_opening_section, text='Stop',command=self.stop_valid_chance)
+        # self.chance_opening_stop_button.grid(row=1, column=1, padx=10, pady=10, sticky="nw")
 
-        self.chance_opening_label = tk.Label(self.chance_opening_section, text="Chance Valid Opening",fg="black")
-        self.chance_opening_label.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
+        self.standart_open_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
+        self.standart_open_section.grid(row=1, column=1, columnspan=5, rowspan=10, padx=20, pady=1, sticky="nw")
 
-        self.chance_opening_start_button = tk.Button(self.chance_opening_section, text='Start',command=self.start_valid_chance)
-        self.chance_opening_start_button.grid(row=1, column=0, padx=10, pady=10, sticky="nw")
+        self.standart_open_period = tk.Entry(self.standart_open_section)
+        self.standart_open_period.grid(row=0, column=0,  padx=10, pady=1, sticky="nw")
 
-        self.chance_opening_stop_button = tk.Button(self.chance_opening_section, text='Stop',command=self.stop_valid_chance)
-        self.chance_opening_stop_button.grid(row=1, column=1, padx=10, pady=10, sticky="nw")
+        self.standart_open_start_button = tk.Button(self.standart_open_section, text='Start',command=self.standard_request_start)
+        self.standart_open_start_button.grid(row=0, column=1,   padx=20, pady=1, sticky="nw")
+
+        self.standart_open_stop_button = tk.Button(self.standart_open_section, text='Stop',
+                                                    command=self.standard_request_stop)
+        self.standart_open_stop_button.grid(row=0, column=2,  padx=20, pady=1, sticky="nw")
 
         self.log_window_section = tk.Frame(self.section1, bd=2, relief=tk.GROOVE, padx=10, pady=10)
         self.log_window_section.grid(row=0, column=3, columnspan=5, rowspan=10, padx=20, pady=1, sticky="nw")
@@ -152,7 +166,25 @@ class MyApp:
         self.create_by_users()
         self.sync_db_button = tk.Button(self.section1, text='Sync User Chances',
                                         command=self.sync_db_functionality)
-        self.sync_db_button.grid(row=3, column=3, padx=10, pady=10, sticky="nw")
+        self.sync_db_button.grid(row=5, column=1, padx=10, pady=10, sticky="nw")
+
+    def standard_request_start(self):
+        if not self.standard_proc:
+            user_list = self.get_checkbox_values()
+            r = Requests()
+
+            period = self.standart_open_period.cget('text')
+            if period:
+                delta = int(period)
+            else:
+                delta = 30
+            self.standard_proc = Process(target=r.standart_requests_by_user_list, args=(user_list,delta,))
+            self.standard_proc.start()
+
+    def standard_request_stop(self):
+        if self.standard_proc:
+            self.standard_proc.terminate()
+            self.standard_proc = None
 
     def log_to_log_window(self, log):
         pass
@@ -201,65 +233,65 @@ class MyApp:
         start_row = 0
         self.create_table(start_row, user_list)
 
-    def start_tracking_functionality(self):
-        if self.tracking_process:
-            self.log_window.insert(tk.END, 'Tracking for changes is already started!...\n')
-        else:
-            self.tracking_process = Process(target=self.tracking)
-            self.log_window.insert(tk.END, 'Tracking for changes started!...\n')
-            self.tracking_process.start()
+    # def start_tracking_functionality(self):
+    #     if self.tracking_process:
+    #         self.log_window.insert(tk.END, 'Tracking for changes is already started!...\n')
+    #     else:
+    #         self.tracking_process = Process(target=self.tracking)
+    #         self.log_window.insert(tk.END, 'Tracking for changes started!...\n')
+    #         self.tracking_process.start()
+    #
+    # def stop_tracking_functionality(self):
+    #     if self.tracking_process:
+    #         self.tracking_process.terminate()
+    #         self.log_window.insert(tk.END, 'Tracking for changes stopped!...\n')
+    #         self.tracking_process = None
 
-    def stop_tracking_functionality(self):
-        if self.tracking_process:
-            self.tracking_process.terminate()
-            self.log_window.insert(tk.END, 'Tracking for changes stopped!...\n')
-            self.tracking_process = None
+    # def tracking(self):
+    #     while True:
+    #         rec = Requests()
+    #         period = 2
+    #         if len(self.rows) > 0:
+    #             user_id = choice(self.rows)[2].cget('text')
+    #             start_json = rec.get_prize_chance_count(user_id=user_id)
+    #             self.log_window.insert(tk.END, 'Waiting 30 seconds!...\n')
+    #             result = rec.tracking_request(period=period, user_id=user_id, start_json=start_json)
+    #             mail = Email()
+    #
+    #             mail.send_mail(self.sender_email_field.get(), self.sender_email_password_field.get(),
+    #                            self.recever_email_field.get(), result)
 
-    def tracking(self):
-        while True:
-            rec = Requests()
-            period = 2
-            if len(self.rows) > 0:
-                user_id = choice(self.rows)[2].cget('text')
-                start_json = rec.get_prize_chance_count(user_id=user_id)
-                self.log_window.insert(tk.END, 'Waiting 30 seconds!...\n')
-                result = rec.tracking_request(period=period, user_id=user_id, start_json=start_json)
-                mail = Email()
-
-                mail.send_mail(self.sender_email_field.get(), self.sender_email_password_field.get(),
-                               self.recever_email_field.get(), result)
-
-    def periodical_requests_start_functionality(self):
-        if self.periodical_proc:
-            self.log_window.insert(tk.END, 'Periodical requests is already started!...\n')
-        else:
-            self.periodical_proc = Process(target=self.periodical)
-            self.periodical_proc.start()
-            self.log_window.insert(tk.END, 'Periodical requests is started!...\n')
-
-    def periodical(self):
-        value = self.periodical_requests_delay__field.get()
-        self.log_window.insert(tk.END, f'Periodical requests delay is {value}!...\n')
-        duration = self.periodical_requests_duration__field.get()
-        self.log_window.insert(tk.END, f'Periodical requests duration is {duration}!...\n')
-        true_rows = self.get_checkbox_values()
-        if value.isnumeric():
-            period = float(value)
-            if duration.isnumeric():
-                int_duration = int(duration)
-                if true_rows:
-                    user = choice(true_rows)
-                    asyncio.run(Requests().request_periodical(user=user, user_list=true_rows, period=period,
-                                                              duration=int_duration))
-
-        else:
-            self.log_window.insert(tk.END, 'period should be a number!...\n')
-
-    def periodical_requests_stop_functionality(self):
-        if self.periodical_proc:
-            self.periodical_proc.terminate()
-            self.log_window.insert(tk.END, f'Periodical requests process is stopped!...\n')
-            self.periodical_proc = None
+    # def periodical_requests_start_functionality(self):
+    #     if self.periodical_proc:
+    #         self.log_window.insert(tk.END, 'Periodical requests is already started!...\n')
+    #     else:
+    #         self.periodical_proc = Process(target=self.periodical)
+    #         self.periodical_proc.start()
+    #         self.log_window.insert(tk.END, 'Periodical requests is started!...\n')
+    #
+    # def periodical(self):
+    #     value = self.periodical_requests_delay__field.get()
+    #     self.log_window.insert(tk.END, f'Periodical requests delay is {value}!...\n')
+    #     duration = self.periodical_requests_duration__field.get()
+    #     self.log_window.insert(tk.END, f'Periodical requests duration is {duration}!...\n')
+    #     true_rows = self.get_checkbox_values()
+    #     if value.isnumeric():
+    #         period = float(value)
+    #         if duration.isnumeric():
+    #             int_duration = int(duration)
+    #             if true_rows:
+    #                 user = choice(true_rows)
+    #                 asyncio.run(Requests().request_periodical(user=user, user_list=true_rows, period=period,
+    #                                                           duration=int_duration))
+    #
+    #     else:
+    #         self.log_window.insert(tk.END, 'period should be a number!...\n')
+    #
+    # def periodical_requests_stop_functionality(self):
+    #     if self.periodical_proc:
+    #         self.periodical_proc.terminate()
+    #         self.log_window.insert(tk.END, f'Periodical requests process is stopped!...\n')
+    #         self.periodical_proc = None
 
     def fast_req_start(self):
         if not self.fast_requests:
@@ -369,19 +401,19 @@ class MyApp:
         for widget in self.rows[row][1:]:
             widget.grid_remove()
 
-    def start_valid_chance(self):
-        if not self.start_process:
-            self.start_process = Process(target=self.start_functionality)
-            self.log_window.insert(tk.END, 'Process is started!...\n')
-            self.start_process.start()
-        else:
-            self.log_window.insert(tk.END, 'Process is already started!...\n')
-
-    def stop_valid_chance(self):
-        if self.start_process:
-            self.start_process.terminate()
-            self.log_window.insert(tk.END, 'Process is stopped!...\n')
-            self.start_process = None
+    # def start_valid_chance(self):
+    #     if not self.start_process:
+    #         self.start_process = Process(target=self.start_functionality)
+    #         self.log_window.insert(tk.END, 'Process is started!...\n')
+    #         self.start_process.start()
+    #     else:
+    #         self.log_window.insert(tk.END, 'Process is already started!...\n')
+    #
+    # def stop_valid_chance(self):
+    #     if self.start_process:
+    #         self.start_process.terminate()
+    #         self.log_window.insert(tk.END, 'Process is stopped!...\n')
+    #         self.start_process = None
 
     def start_functionality(self):
         while True:
