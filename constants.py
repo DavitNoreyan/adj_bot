@@ -45,7 +45,7 @@ class Constants:
         'Content-Length': '256',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'Origin': 'https://promos.www.adjarabet.am',
-        'Referer': 'https://promos.www.adjarabet.am/slotboyard/',
+        'Referer': 'https://promos.www.adjarabet.am/xaxerikarusel/',
         'Sec-Ch-Ua': '"Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"',
         'Sec-Ch-Ua-Mobile': '?0',
         'Sec-Ch-Ua-Platform': '"Linux"',
@@ -54,8 +54,6 @@ class Constants:
         'Sec-Fetch-Site': 'same-origin',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
         'X-Requested-With': 'XMLHttpRequest'
-
-
     }
     star_box_payload = {
         "userID": "",

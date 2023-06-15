@@ -170,7 +170,9 @@ class MyApp:
 
     def standard_request_start(self):
         if not self.standard_proc:
-            user_list = self.get_checkbox_values()
+            users = self.get_checkbox_values()
+            user_list = [user[2].cget('text') for user in users]
+
             r = Requests()
 
             period = self.standart_open_period.cget('text')

@@ -267,7 +267,7 @@ class Requests:
                     self.logger.info(f'trying refresh for user {user}')
                     time.sleep(2)
                 prize = self.standart_request(user=user, box=box)
-                self.logger.info(f'prize is {prize}')
+                self.logger.info(f'prize is {prize} for user {user}')
                 if not prize:
                     payload = Constants.star_box_payload
                     payload['userID'] = f"{user}"
