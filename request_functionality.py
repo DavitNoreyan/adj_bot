@@ -7,6 +7,7 @@ import time
 import requests
 import aiohttp
 from random import randint, choice
+from concurrent.futures import ThreadPoolExecutor
 
 from constants import Constants
 from database import Database
@@ -280,14 +281,12 @@ class Requests:
 
     def standart_requests_by_user_list(self, user_list, period):
         while True:
-            proc_list = []
-            for user in user_list:
-                t = threading.Thread(target=self.standart_request_functionality, args=(user[2].cget('text'), period,))
-                proc_list.append(t)
-                t.start()
-                time.sleep(2)
-            for t in proc_list:
-                t.join()
+            with ThreadPoolExecutor(max_workers=30) as executor:
+                for user in user_list:
+                    executor.submit(self.standart_request_functionality, user, period)
+            time.sleep(5)
+
+
 
     def refresh_request(self, user):
         refresh_payload = Constants.REFRESH_PAYLOAD
