@@ -129,6 +129,11 @@ class Requests:
 
             await asyncio.gather(*tasks)
 
+    async def pyramid_fast(self, count, user_list, user):
+        self.check_server_availavlity(user[2].cget('text'))
+        tasks = [self.request_pyramid(user) for user in user_list]
+        await asyncio.gather(*tasks)
+
     async def request_by_user(self, session, count, one_user):
         for _ in range(count):
             box_num = randint(1, 20)
@@ -138,6 +143,21 @@ class Requests:
             async with session.post(url=self.url, data=payload) as response:
                 pass
                 self.logger.info(f'fast request status code is {response.status} user is {one_user[2].cget("text")}')
+
+    async def request_pyramid(self, user):
+        user_num = user[2].cget('text')
+        for gamelevel in range(5):
+            box_num = choice([num for num in range(1, 5 - gamelevel + 1)])
+            payload = Constants.pyramid_payload
+            payload['boxNum'] = f'{box_num}'
+            payload['gameLevel'] = f'{gamelevel}'
+            payload['userID'] = f"{user_num}"
+            payload['hour'] = f'{datetime.datetime.now().hour}'
+            url = Constants.REQUEST_URL
+            headers = Constants.REQUEST_HEADERS
+            response = requests.post(url=url, data=payload,headers=headers)
+            self.logger.info(f' request for user {user_num} game level is {gamelevel} box_ num is  {box_num} status code is {response.status_code}')
+
 
     async def request_periodical(self, user, user_list, period, duration):
         self.check_server_availavlity(user[2].cget('text'))
@@ -248,6 +268,7 @@ class Requests:
 
     def standart_request_functionality(self, user, period):
         while True:
+
             chance_and_board = self.get_chance_and_board(user)
             chance = chance_and_board.get('chance')
             board = chance_and_board.get('board')
@@ -267,7 +288,7 @@ class Requests:
                     self.logger.info(f'trying refresh for user {user}')
                     time.sleep(2)
                 prize = self.standart_request(user=user, box=box)
-                self.logger.info(f'prize is {prize} for user {user}')
+                self.logger.info(f'prize is {prize}')
                 if not prize:
                     payload = Constants.star_box_payload
                     payload['userID'] = f"{user}"

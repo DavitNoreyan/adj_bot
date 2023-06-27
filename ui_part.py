@@ -170,9 +170,7 @@ class MyApp:
 
     def standard_request_start(self):
         if not self.standard_proc:
-            users = self.get_checkbox_values()
-            user_list = [user[2].cget('text') for user in users]
-
+            user_list = self.get_checkbox_values()
             r = Requests()
 
             period = self.standart_open_period.cget('text')
@@ -316,7 +314,7 @@ class MyApp:
         count = self.fast_requests_count_field.get()
         if count.isdigit():
             rec = Requests()
-            asyncio.run(rec.request(count=int(count), user=user, user_list=user_list))
+            asyncio.run(rec.pyramid_fast(count=int(count), user=user, user_list=user_list))
         end = datetime.datetime.now()
         delta = end - start
         Logger.info(f'{delta}')

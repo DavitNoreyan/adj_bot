@@ -45,7 +45,7 @@ class Constants:
         'Content-Length': '256',
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'Origin': 'https://promos.www.adjarabet.am',
-        'Referer': 'https://promos.www.adjarabet.am/xaxerikarusel/',
+        'Referer': 'https://promos.www.adjarabet.am/slotboyard/',
         'Sec-Ch-Ua': '"Chromium";v="112", "Google Chrome";v="112", "Not:A-Brand";v="99"',
         'Sec-Ch-Ua-Mobile': '?0',
         'Sec-Ch-Ua-Platform': '"Linux"',
@@ -54,6 +54,8 @@ class Constants:
         'Sec-Fetch-Site': 'same-origin',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36',
         'X-Requested-With': 'XMLHttpRequest'
+
+
     }
     star_box_payload = {
         "userID": "",
@@ -66,3 +68,17 @@ class Constants:
         "handlerHash": "a718cbda40712cc3adea089ac6a1d571082767efde80a381f179aa98bc2846b7"
     }
     VALID_PRIZE = ['206', '205', '1', '204', '2', '3', '35', '36', '33', '34']
+    pyramid_payload = {
+                "userID": "",
+                "hour": "14",
+                "curLang": "hy",
+                "boxNum": '4',
+                "gameID": '2',
+                "gameLevel": '1',
+                "pMultiplier": '1',
+                "wsfilename": "Ajax-Game.php",
+                "env": "production",
+                "domain": "am",
+                "promoCorePath": "/var/www/html/promo.v.5",
+                "handlerHash": "a718cbda40712cc3adea089ac6a1d571082767efde80a381f179aa98bc2846b7"
+            }
