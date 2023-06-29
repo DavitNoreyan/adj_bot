@@ -314,7 +314,7 @@ class MyApp:
         count = self.fast_requests_count_field.get()
         if count.isdigit():
             rec = Requests()
-            asyncio.run(rec.pyramid_fast(count=int(count), user=user, user_list=user_list))
+            asyncio.run(rec.request(count=int(count), user=user, user_list=user_list))
         end = datetime.datetime.now()
         delta = end - start
         Logger.info(f'{delta}')
